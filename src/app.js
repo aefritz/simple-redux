@@ -14,6 +14,10 @@ const reducer = (state = 0, action) => {
       return state - action.payload.value;
     case 'RESET':
       return 0;
+    case 'MULTIPLY':
+      return state * action.payload.value;
+    case 'DIVIDE':
+      return state / action.payload.value;
     default:
       return state;
   }
@@ -67,6 +71,16 @@ const subtract = () => ({
  */
 const reset = () => ({ type: 'RESET' });
 
+
+const multiply = () => ({
+  type: 'MULTIPLY',
+  payload: { value: getValue() }
+});
+
+const divide = () => ({
+  type: 'DIVIDE',
+  payload: { value: getValue() }
+});
 /*/************************
   PART 4: HOOK BEHAVIOR
 /**************************/
@@ -74,6 +88,7 @@ const reset = () => ({ type: 'RESET' });
 // Subscribe to updates
 store.subscribe(() => {
   setTotal(store.getState());
+  document.getElementById('op-number').value = 0;
 });
 
 // Handle add button click
@@ -89,4 +104,14 @@ document.getElementById('subtract-btn').addEventListener('click', () => {
 // Handle reset button click
 document.getElementById('reset-btn').addEventListener('click', () => {
   store.dispatch(reset());
+});
+
+//Handle multiply button click
+document.getElementById('multiply-btn').addEventListener('click', () => {
+  store.dispatch(multiply());
+});
+
+//Handle divide button click
+document.getElementById('divide-btn').addEventListener('click', () => {
+  store.dispatch(divide());
 });
